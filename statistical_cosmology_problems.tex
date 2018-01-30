@@ -1,0 +1,131 @@
+\documentclass[aps,prd,superscriptaddress,groupedaddress,nofootinbib,nobibnotes]{revtex4}
+
+\usepackage{graphicx}
+\usepackage{dcolumn}
+\usepackage{bm}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{color}
+\usepackage{mathrsfs}
+% \usepackage{comment}
+% \usepackage{url}
+% \usepackage{wick}
+% \usepackage{feynmp}
+% \usepackage{braket}
+
+\setlength{\parindent}{20pt}
+% \setlength{\parskip}{1mm}
+
+\setcounter{topnumber}{1}    % default value is 2.
+\setcounter{bottomnumber}{0} % default value is 1.
+
+\hyphenation{ALPGEN}
+\hyphenation{EVTGEN}
+\hyphenation{PYTHIA}
+
+\newcommand{\kms}[1]{\textcolor{blue}{(KMS: #1)}}
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\ba}{\begin{eqnarray}}
+\newcommand{\ea}{\end{eqnarray}}
+\newcommand{\nn}{\nonumber}
+\newcommand{\barr}{\begin{array}}
+\newcommand{\earr}{\end{array}}
+\newcommand{\eqdef}{\stackrel{\rm def}{=}}
+\newcommand{\bigoh}{\mathcal{O}}
+
+\newcommand\lsim{\mathrel{\rlap{\lower4pt\hbox{\hskip1pt$\sim$}}
+        \raise1pt\hbox{$<$}}}
+\newcommand\gsim{\mathrel{\rlap{\lower4pt\hbox{\hskip1pt$\sim$}}
+        \raise1pt\hbox{$>$}}}
+
+\def\threej#1#2#3#4#5#6{\left( \begin{array}{ccc} #1 & #2 & #3 \\ #4 & #5 & #6 \end{array} \right) }
+\def\smallsum{\mathop{\textstyle\sum}\limits}
+\def\Var{\mbox{Var}}
+\def\Cov{\mbox{Cov}}
+\def\x{{\bf x}}
+\def\y{{\bf y}}
+\def\r{{\bf r}}
+\def\k{{\bf k}}
+
+\renewcommand{\baselinestretch}{1.1}
+
+\begin{document}
+
+\title{Statistical cosmology problems}
+
+\author{Kendrick~M.~Smith}
+\affiliation{Perimeter Institute for Theoretical Physics, Waterloo, ON N2L 2Y5, Canada}
+
+\date{\today}
+
+% \begin{abstract}
+% ABSTRACT HERE
+% \end{abstract}
+% \pacs{}
+
+\maketitle
+
+\section{Power spectra in flat space}
+
+\par\noindent
+In this section, let $\phi(\x)$ be a 3D random field with power spectrum $P(k)$ defined by
+\be
+\langle \phi_{\k}^* \phi_{\k'} \rangle = P(k) \, (2\pi)^3 \delta^3(\k-\k')  \label{eq:pk_def}
+\ee
+
+\begin{enumerate}
+
+\item What symmetry assumptions are made in writing down Eq.~(\ref{eq:pk_def})?
+ Show how Eq.~(\ref{eq:pk_def}) follows from these assumptions.
+
+\item Suppose we define a new random field $\psi$ by $\psi(\x) = \nabla^2 \phi(\x)$.
+What is the power spectrum $P_\psi(k)$ of the $\psi$ field (in terms of the original power spectrum $P(k)$)?
+
+\item {\bf Scaling.}
+Suppose that we define the field $\psi(\x) = \phi(\lambda\x)$ by rescaling coordinates,
+where $\lambda$ is a constant.  Show that the power spectrum scales as
+\be
+P_\psi(k) = \lambda^{-3} P(\lambda^{-1} k)
+\ee
+Note that as a consequence, if a field's power spectrum is proportional to $k^{-3}$, 
+then it is {\em scale-invariant}, in the sense that magnifying/demagnifying does 
+not change its statistical properties.
+
+\item {\bf Slicing.}
+Suppose we define a {\em two-dimensional} random field $\psi(\x)$ by simply restricting 
+the 3D field $\phi$ to a 2D plane, i.e. in real space:
+\be
+\psi(x,y) = \phi(x,y,0)
+\ee
+Let $P_\psi(l)$ be the power spectrum of this field.  (Note that we use $l$ for Fourier wavenumbers in 2D, and
+$k$ in 3D.)  Show that $P_\psi(l)$ is related to the original 3D power spectrum $P(k)$ by
+\be
+P_\psi(l) = \int_l^\infty dk \, \frac{k}{2\pi\sqrt{k^2-l^2}} P(k)
+\ee
+Suppose the 3D power spectrum has the scale-invariant form $P(k) = A k^{-3}$.
+What is $P_\psi(l)$ in this case?  Is it also scale invariant?
+
+\item {\bf Slicing, part 2.}
+In the previous problem, we worked out the transformation law for the power spectrum,
+when a 3D field is restricted on a 2D plane.  What is the analogous transformation law
+when restricting to a 1D line?
+
+\item {\bf Convolution.}
+Suppose we define a new field $\psi(\x)$ by convolving with a kernel in real space.
+\be
+\psi(\x) = \int d^3\y \, W(|\x-\y|) \phi(\y)
+\ee
+where $W(r)$ is a kernel which we assume only depends on $r = |\r|$.  How are the Fourier transforms $\tilde\psi(\k)$
+and $\tilde\phi(\k)$ related?  How is the power spectrum $P_\psi(k)$ related to $P(k)$?
+
+\item {\bf Tophat averaging.}
+Suppose we define a new field $\psi(\x)$ by ``tophat averaging'' the field $\phi$.
+That is, the value of $\psi$ at any point $\x$ is given by averaging $\phi$ over a ball of radius $R$ centered at $\x$.
+How is the power spectrum $P_\psi(k)$ related to $P(k)$?  (Hint: use the result of the previous problem.)
+
+\end{enumerate}
+
+\end{document}
