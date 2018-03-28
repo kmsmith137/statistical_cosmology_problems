@@ -49,6 +49,8 @@
 \def\y{{\bf y}}
 \def\r{{\bf r}}
 \def\k{{\bf k}}
+\def\L{{\mathcal L}}
+\def\hpi{{\hat\pi}}
 
 \renewcommand{\baselinestretch}{1.1}
 
@@ -67,8 +69,9 @@
 % \pacs{}
 
 \maketitle
+% \tableofcontents
 
-\section{Power spectra in flat space}
+\section{Power spectra}
 
 \par\noindent
 In this section, let $\phi(\x)$ be a 3D random field with power spectrum $P(k)$ defined by
@@ -127,5 +130,219 @@ That is, the value of $\psi$ at any point $\x$ is given by averaging $\phi$ over
 How is the power spectrum $P_\psi(k)$ related to $P(k)$?  (Hint: use the result of the previous problem.)
 
 \end{enumerate}
+
+\section{Power spectrum forecasts}
+
+\par\noindent
+In the first two problems, the setup is as follows.
+We are given as ``data'' $N$ independent samples $x_1, \cdots, x_N$ from a Gaussian distribution.
+Suppose that the mean of the distribution is known in advance to be zero, but the variance $\eta$ is not known in advance.
+We are interested in forecasting the statistical error $\sigma(\eta)$ on the parameter $\eta$, when it is estimated from the data $x_i$.
+This toy example is a warmup for the power spectrum forecasts which follow.
+
+\begin{enumerate}
+
+\item {\bf Statistical error on variance of a Gaussian, frequentist version.} 
+ In frequentist statistics, we construct an estimator $\hat\eta$ for the parameter $\eta$, given the data $x_i$.
+ In general, the question of which estimator to use can be nontrivial and require calculation, but in this
+ simple example there is only one natural choice:
+\be
+ \hat\eta = \frac{1}{N} \sum_{i=1}^N x_i^2
+\ee
+ Show that $\hat\eta$ is an unbiased estimator of $\eta$ (i.e.~$\langle \hat\eta \rangle = \eta$).
+ By computing the variance $\mbox{Var}(\hat\eta)$, determine the statistical error $\sigma(\eta)$.
+ You may find formulas in Appendix~\ref{app:gaussian} useful.
+
+\item {\bf Statistical error on variance of a Gaussian, Bayesian version.}
+ In Bayesian statistics, we make inferences on $\eta$ given the data $x_i$ by
+ using the posterior likelihood $\L[\eta|x_i]$.
+ 
+ Assuming a flat prior on $\eta$, write an expression for the posterior likelihood $\L[\eta|x_i]$.
+ At what value of $\eta$ is the likelihood maximized?  (The result will depend on the data $x_i$.)
+
+ A standard Bayesian method for forecasting the statistical error $\sigma(\eta)$
+ is to compute the Fisher matrix, which we briefly review here.
+ Here, the Fisher ``matrix'' is a 1-by-1 matrix $F$, since there is only one parameter:
+\be
+ F = -\left\langle \frac{\partial^2 \log\L(\eta|x_i)}{\partial \eta^2} \right\rangle  \label{eq:F_eta}
+\ee
+ where the expectation value $\langle \cdot \rangle$ is taken over random realizations of the data $x_i$
+ for a fixed value of the parameter $\eta$.  Note that the posterior likelihood $\L(\eta|x_i)$ depends on
+ both $\eta$ and $x_i$, but the Fisher matrix only depends on $\eta$.  The forecasted error $\sigma(\eta)$
+ is related to the Fisher matrix by $\sigma(\eta) = F^{-1/2}$.
+
+ Compute the Fisher matrix using Eq.~(\ref{eq:F_eta}) and the forecasted statistical error $\sigma(\eta)$.
+ Does the result agree with your frequentist forecast in the previous question?
+
+\newcounter{enumi_save}
+\setcounter{enumi_save}{\value{enumi}}
+\end{enumerate}
+
+\medskip\par\noindent
+The setup for the remaining problems will be as follows.
+Let $\phi_{\k}$ be a 3D Gaussian random field with power spectrum $P(k)$.
+Suppose that $\phi$ is defined in a box with volume $V$ and periodic boundary conditions, so that the Fourier wavenumbers $\k$ form a discrete set.
+We assume that field $\phi$ has been observed over some range of scales, so that our ``data'' consists of
+complex numbers $\phi_{\k_1}, \phi_{\k_2}, \cdots$ for some finite set of wavenumbers $\k$.
+
+Suppose that the power spectrum $P(k)$ depends on parameters $\pi_1, \cdots, \pi_N$ which are not known in advance, 
+but must be inferred from the data.
+When we want to denote this dependence explicitly, we will write the power spectrum as $P(k,\pi_i)$,
+a function of $(N+1)$ variables.
+
+For example, the parameters $\pi_i$ might be cosmological parameters $(\Omega_b, \Omega_m, \cdots)$,
+and $\phi$ might be the cosmological density field, whose power spectrum depends on cosmological parameters
+in a complicated way, which is computable using software such as CAMB or CLASS.
+We will assume that we have rough fiducial guesses for the parameters $\pi_i^{\rm fid}$, and therefore a rough
+fiducial guess for the power spectrum $P_{\rm fid}(k) = P(k,\pi_i^{\rm fid})$.
+
+We are interested in forecasting statistical errors $\sigma(\pi_i)$ on the parameters $\pi_i$
+when the modes of the field $\phi_{\k}$ are measured.
+Note that when forecasting the error $\sigma(\pi_i)$, we can choose to either {\em marginalize}
+the remaining parameters $\pi_{j\ne i}$, or {\em fix} these parameters to their fiducial values.
+By default, if we write $\sigma(\pi_i)$ without indicating this choice explicitly, then the
+remaining parameters $\pi_{j\ne i}$ are assumed marginalized.
+
+\begin{enumerate}
+\setcounter{enumi}{\value{enumi_save}}
+
+\item {\bf Statistical error on power spectrum, Bayesian version.}
+  In Bayesian statistics, we can forecast statistical errors on parameters using the Fisher matrix,
+  which we briefly review here.  In this context, the Fisher matrix is defined by:
+\be
+F_{ij} = -\left\langle \frac{\partial^2\L[\pi_i|\phi_{\k}]}{\partial\pi_i \partial\pi_j} \right\rangle  \label{eq:F_P}
+\ee
+  where the expectation value $\langle \cdot \rangle$ is taken over random realizations of the field $\phi$,
+  for fixed values of the parameters $\pi_i$.
+  The statistical error on parameter $i$ is given by either $(F_{ii})^{-1/2}$ or $(F^{-1}_{ii})^{1/2}$,
+  depending on whether the remaining parameters $\pi_{j\ne i}$ are assumed fixed or marginalized.  In a
+  fully marginalized analysis, the covariance matrix of the parameters is the inverse Fisher matrix:
+  $\mbox{Cov}(\pi_i, \pi_j) = F^{-1}_{ij}$.
+
+  Write an expression for the posterior likelihood function $\L[\pi_i|\phi_{\k}]$ as a product over observed Fourier modes $\k$.
+  Then compute the Fisher matrix using Eq.~(\ref{eq:F_P}), and show that the result can be written as the sum over observed Fourier modes:
+\be
+F_{ij} = \frac{1}{2} \sum_{\k} \frac{(\partial_i P(k)) (\partial_j P(k))}{P(k)^2}
+\ee
+\item {\bf Forecasting bandpowers}.
+  Suppose that we observe the field $\phi_{\k}$ over some range of scales $k_{\rm min} < k < k_{\rm max}$,
+  and that we define this $k$-range into $N$ bands $b_1 = [k_{\rm min}, k_1]$, $b_2 = [k_1, k_2]$, $\cdots$, 
+  $b_N = [k_{N-1}, k_{\rm max}]$.  We parametrize the power spectrum by defining ``bandpowers'' $\pi_1, \cdots, \pi_N$:
+\be
+ P(k) = \left\{
+  \begin{array}{cl}
+    (1 + \pi_1) P_{\rm fid}(k) & \mbox{ if $k\in b_1$} \\
+    (1 + \pi_2) P_{\rm fid}(k) & \mbox{ if $k\in b_2$} \\
+      \cdots & \cdots \\
+    (1 + \pi_N) P_{\rm fid}(k) & \mbox{ if $k\in b_N$}
+  \end{array} \right.
+\ee
+  Compute the Fisher matrix $F_{ij}$ in this parameter space.
+  Assuming that the $k$-sums which arise can be approximated by integrals, what is the simplest way of writing the result?
+  What is the statistical error $\sigma(\pi_i)$ on the bandpowers?
+
+\item {\bf Forecasting amplitude and spectral index.}
+  Suppose we observe the field $\phi_{\k}$ over some range of scales $k_{\rm min} < k < k_{\rm max}$,
+  and that we model the power spectrum as a power law:
+\be
+  P(k) = P_0 \left( \frac{k}{k_{\rm min}} \right)^\alpha
+\ee
+  where the parameters are the amplitude $\pi_1 = P_0$ and the spectral index $\pi_2 = \alpha$.
+  As usual, we assume that we have rough initial guesses $\pi_i^{\rm fid} = (P_0^{\rm fid}, \alpha_{\rm fid})$
+  for these parameters.
+
+  What are the statistical errors on the parameters $P_0$ and $\alpha$, if the complementary parameter
+  is assumed fixed?  Assumed marginalized?
+  Assume that the $k$-sums which arise can be approximated by integrals.
+  The result should be expressible as a fairly simple function of $k_{\rm min}$, $k_{\rm max}$, and the box volume $V$?
+
+\item {\bf Noise and beam.}
+  How would the Fisher matrix in Eq.~(\ref{eq:F_P}) change if the observation of the field $\phi_{\k}$ is noisy?
+  That is, instead of observing each mode $\phi_\k$ perfectly, suppose we observe the sum $(\phi_\k + \eta_\k)$, where
+  the noise $\eta$ is a Gaussian random field with known power spectrum $P_\eta(k)$.
+
+  How would the Fisher matrix in Eq.~(\ref{eq:F_P}) change if the field is convolved with an observational ``beam'', before adding noise?
+  That is, assume that we observe the sum $(b_k \phi_\k + \eta_\k)$, where $b_k$ is a known beam profile,
+  and $\eta$ is a Gaussian random field with known power spectrum $P_\eta(k)$.
+
+\item 
+  {\bf Statistical error on power spectrum, frequentist version.}
+  So far, our power spectrum forecasts have used Bayesian statistics, which turns out to be simpler.
+  However, Eq.~(\ref{eq:F_P}) for the Fisher matrix can also be derived in a different way, using frequentist statistics.
+  Warning: this problem is long and fairly difficult, so I saved it for last!
+
+  First, some setup.
+  For each parameter $\pi_i$, we want to construct an estimator $\hpi_i$, whose input is the observed field $\phi_{\k}$,
+  and whose output is a real number.  Let us start by writing a general estimator in the form:
+\be
+  \hpi_i = A_i + \frac{1}{2} \sum_{\k} W_i(k) |\phi_\k|^2  \label{eq:hpi1}
+\ee
+  with additive offset $A_i$ and $k$-weighting $W_i(k)$ to be determined by a calculation to follow shortly.
+  This form of the estimator makes some assumptions, for example we have assumed that the estimator must be quadratic
+  in the field $\phi$, which makes intuitive sense because the two-point function of a Gaussian field contains all
+  the information.  However we will omit the formal proof that the optimal estimator takes the form in Eq.~(\ref{eq:hpi1}).
+  (The factor $1/2$ is a convention which will turn out to be convenient in the calculations below.)
+
+  Leaving $A$ and $W_k$ undetermined for now, calculate the expectation value $\langle \hpi_i \rangle$, assuming that
+  the power spectrum is perturbed to {\em first order} in $\delta\pi_i = \pi_i - \pi_i^{\rm fid}$.  That is, assuming:
+\be
+  P(k) = P_{\rm fid}(k) + \sum_i (\delta \pi_j) \frac{\partial P(k)}{\partial\pi_j}
+\ee
+  calculate the expectation value of the estimator in Eq.~(\ref{eq:hpi1}), and write the result as the sum of terms
+  which are zeroth-order and first-order in $(\delta\pi_j)$.  You result should take the general form:
+\be
+  \langle \hpi_i \rangle = M_{ij} (\delta \pi_j) + N_i
+\ee
+  where the matrix $M_{ij}$ and vector $N_i$ will depend on the weights $A$ and $W_i(k)$.
+
+  Next, calculate the variance $\Var(\hpi_i)$ of the estimator in Eq.~(\ref{eq:hpi1}), to zeroth order in $(\delta\pi_i)$.
+  That is, assume $P(k) = P_{\rm fid}(k)$.
+
+  We would like to derive the {\em minimum variance unbiased estimator} $\hpi_i$.
+  This can be done by minimizing the variance $\Var(\hpi_i)$, subject to the constraint that $\hpi_i$ is an unbiased estimator
+  of the parameter $\pi_i$, to first order in $(\delta\pi_j)$.
+  That is, we have $\langle \hpi_i \rangle = \pi_i^{\rm fid} + (\delta\pi_i)$, with no contribution from $(\delta\pi_{j \ne i})$.
+  This gives the following constraints on $M_{ij}$ and $N_i$:
+\be
+ M_{ij} = \delta_{ij}
+   \hspace{1.5cm}
+ N_i = \pi_i^{\rm fid}
+\ee
+  Using your expressions for $\Var(\hpi_i)$, $M_{ij}$, and $N_i$, solve for the weights $A$ and $W_i(k)$ which
+  give the minimum variance quadratic estimator.  (Hint: when solving this constrained optimization problem, you
+  may find the method of Lagrange multipliers useful.)
+
+  Finally, now that you have derived the minimum variance quadratic estimator $\hpi_i$,
+  calculate the covariance matrix $\mbox{Cov}(\hpi_i, \hpi_j)$.  You should get $F^{-1}_{ij}$,
+  where $F_{ij}$ is the Fisher matrix defined previously in Eq.~(\ref{eq:F_P}).  This gives
+  an alternate derivation of the Fisher matrix based on frequentist statistics.  
+
+  In this problem, the frequentist version of the calculation is more complicated,
+  and it is easiest to just use Bayesian statisitics throughout!  However, there are
+  situations in statistical cosmology where the frequentist calculation turns out to be
+  easier, so it is useful to work through an example to see how the two formalisms relate.
+\end{enumerate}
+
+\appendix
+
+\section{Gaussian probability distribution}
+\label{app:gaussian}
+
+\par\noindent
+The probability distribution of a Gaussian random variable with mean $\mu$ and variance $\sigma^2$ is
+\be
+p(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left( - \frac{(x-\mu)^2}{2\sigma^2} \right)
+\ee
+Expectation values of Gaussian random variables can be computed using Wick's theorem.
+For example:
+\be
+\langle x \rangle = \mu
+  \hspace{1cm}
+\langle x^2 \rangle = \mu^2 + \sigma^2
+  \hspace{1cm}
+\langle x^3 \rangle = \mu^3 + 3 \sigma^2 \mu
+  \hspace{1cm}
+\langle x^4 \rangle = \mu^4 + 6 \sigma^2 \mu^2 + 3 \sigma^4
+\ee
 
 \end{document}
