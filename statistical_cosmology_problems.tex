@@ -222,7 +222,7 @@ F_{ij} = -\left\langle \frac{\partial^2\log\L[\pi_i|\phi_{\k}]}{\partial\pi_i \p
   Write an expression for the posterior likelihood function $\L[\pi_i|\phi_{\k}]$ as a product over observed Fourier modes $\k$.
   Then compute the Fisher matrix using Eq.~(\ref{eq:F_P}), and show that the result can be written as the sum over observed Fourier modes:
 \be
-F_{ij} = \frac{1}{2} \sum_{\k} \frac{(\partial_i P(k)) (\partial_j P(k))}{P(k)^2}
+F_{ij} = \frac{1}{2} \sum_{\k} \frac{(\partial_i P(k)) (\partial_j P(k))}{P(k)^2}  \label{eq:F_P2}
 \ee
 \item {\bf Forecasting bandpowers}.
   Suppose that we observe the field $\phi_{\k}$ over some range of scales $k_{\rm min} < k < k_{\rm max}$,
@@ -257,18 +257,18 @@ F_{ij} = \frac{1}{2} \sum_{\k} \frac{(\partial_i P(k)) (\partial_j P(k))}{P(k)^2
   The result should be expressible as a fairly simple function of $k_{\rm min}$, $k_{\rm max}$, and the box volume $V$?
 
 \item {\bf Noise and beam.}
-  How would the Fisher matrix in Eq.~(\ref{eq:F_P}) change if the observation of the field $\phi_{\k}$ is noisy?
+  How would the Fisher matrix in Eq.~(\ref{eq:F_P2}) change if the observation of the field $\phi_{\k}$ is noisy?
   That is, instead of observing each mode $\phi_\k$ perfectly, suppose we observe the sum $(\phi_\k + \eta_\k)$, where
   the noise $\eta$ is a Gaussian random field with known power spectrum $P_\eta(k)$.
 
-  How would the Fisher matrix in Eq.~(\ref{eq:F_P}) change if the field is convolved with an observational ``beam'', before adding noise?
+  How would the Fisher matrix in Eq.~(\ref{eq:F_P2}) change if the field is convolved with an observational ``beam'', before adding noise?
   That is, assume that we observe the sum $(b_k \phi_\k + \eta_\k)$, where $b_k$ is a known beam profile,
   and $\eta$ is a Gaussian random field with known power spectrum $P_\eta(k)$.
 
 \item 
   {\bf Statistical error on power spectrum, frequentist version.}
   So far, our power spectrum forecasts have used Bayesian statistics, which turns out to be simpler.
-  However, Eq.~(\ref{eq:F_P}) for the Fisher matrix can also be derived in a different way, using frequentist statistics.
+  However, Eq.~(\ref{eq:F_P2}) for the Fisher matrix can also be derived in a different way, using frequentist statistics.
   Warning: this problem is long and fairly difficult, so I saved it for last!
 
   First, some setup.
@@ -314,7 +314,7 @@ F_{ij} = \frac{1}{2} \sum_{\k} \frac{(\partial_i P(k)) (\partial_j P(k))}{P(k)^2
 
   Finally, now that you have derived the minimum variance quadratic estimator $\hpi_i$,
   calculate the covariance matrix $\mbox{Cov}(\hpi_i, \hpi_j)$.  You should get $F^{-1}_{ij}$,
-  where $F_{ij}$ is the Fisher matrix defined previously in Eq.~(\ref{eq:F_P}).  This gives
+  where $F_{ij}$ is the Fisher matrix defined previously in Eq.~(\ref{eq:F_P2}).  This gives
   an alternate derivation of the Fisher matrix based on frequentist statistics.  
 
   In this problem, the frequentist version of the calculation is more complicated,
