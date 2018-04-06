@@ -349,14 +349,14 @@ The coefficients $a_{lm}$ can be determined from the field $\phi(\n)$ by doing t
 \be
 a_{lm} = \int d^2\n \, \phi(\n) Y_{lm}^*(\n)  \label{eq:sht2}
 \ee
-This follows from Eq.~(\ref{eq:sht1}), by multiplying both sides by $Y_{lm}(\n)^*$, and using the
+This follows from Eq.~(\ref{eq:sht1}), by multiplying both sides by $Y_{lm}^*(\n)$, and using the
 orthogonality identity in Eq.~(\ref{eq:ylm_orth}).  Note that $d^2\n$ denotes the rotation-invariant
 area element on the sphere (i.e.~$d^2\n = \sin\theta \, d\theta \, d\phi$ in coordinates $\theta,\phi$).
 
 Taken together, Equations~(\ref{eq:sht1}) and~(\ref{eq:sht2}) define an invertible transform 
 $\phi(\n) \leftrightarrow a_{lm}$ which exchanges a real-space field $\phi(\n)$ and its harmonic-space
 coefficients $a_{lm}$.  This is the ``spherical harmonic transform'', the curved-sky analog of the
-2D Euclidean Fourier transform $\phi(\x) \rightarrow \tphi(\l)$, defined by:
+2D Euclidean Fourier transform $\phi(\x) \leftrightarrow \tphi(\l)$, defined by:
 \be
 \tphi(\l) = \int d^2\x \, \phi(\x) e^{-i\l\cdot\x}
   \hspace{1.5cm}
@@ -374,7 +374,7 @@ Here is another theorem whose proof we will omit.
 If the statistics of a random field are rotationally invariant, then its harmonic-space two-point
 correlation function has the constrained form:
 \be
-\langle a_{l m}^* a_{l'm'} \rangle C_l \delta_{ll'} \delta_{mm'}   \label{eq:cl_def}
+\langle a_{l m}^* a_{l'm'} \rangle = C_l \delta_{ll'} \delta_{mm'}   \label{eq:cl_def}
 \ee
 where the power spectrum $C_l$ is defined by this equation.  This is the curved-sky analog of
 Eq.~(\ref{eq:pk_def}), which defines the power spectrum $P(k)$ assuming translation and rotation
@@ -415,7 +415,7 @@ In the following problems, we will work out more properties of curved-sky fields
 \be
  \zeta(\theta) = \sum_l \frac{2l+1}{4\pi} \, C_l \, P_l(\cos\theta)  \label{eq:clcf1}
 \ee
- Using orthogonality of the Legendre polynomials (Eq.~(\ref{eq:pl_orth}), show how
+ Using orthogonality of the Legendre polynomials (Eq.~(\ref{eq:pl_orth})), show how
  to invert Eq.~(\ref{eq:clcf2}), obtaining the relation:
 \be
 C_l = 2\pi \int_{-1}^1 d(\cos\theta) \, \zeta(\theta) \, P_l(\cos\theta)  \label{eq:clcf2}
@@ -453,7 +453,7 @@ C_l = 2\pi \int_{-1}^1 d(\cos\theta) \, \zeta(\theta) \, P_l(\cos\theta)  \label
 
 \item {\bf Fisher matrix.}
  Now consider a curved-sky Gaussian random field whose power spectrum $C_l$ depends on cosmological
- parameters $\pi_1, \cdots, \pi_N$.  We assume that we have rough fiducial guesses $\pi_i^{rm fid}$,
+ parameters $\pi_1, \cdots, \pi_N$.  We assume that we have rough fiducial guesses $\pi_i^{\rm fid}$,
  and therefore a rough fiducial guess for the power spectrum $C_l^{\rm fid}$.
 
  Suppose that we observe the Fourier modes $a_{lm}$ over some range of multipoles $l_{\rm min} \le l \le l_{\rm max}$.
