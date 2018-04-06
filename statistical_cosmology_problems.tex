@@ -49,8 +49,11 @@
 \def\y{{\bf y}}
 \def\r{{\bf r}}
 \def\k{{\bf k}}
+\def\l{{\bf l}}
 \def\L{{\mathcal L}}
 \def\hpi{{\hat\pi}}
+\def\n{{\bf n}}
+\def\tphi{{\tilde\phi}}
 
 \renewcommand{\baselinestretch}{1.1}
 
@@ -323,6 +326,164 @@ F_{ij} = \frac{1}{2} \sum_{\k} \frac{(\partial_i P(k)) (\partial_j P(k))}{P(k)^2
   easier, so it is useful to work through an example to see how the two formalisms relate.
 \end{enumerate}
 
+\clearpage
+
+\section{Curved sky}
+
+So far, we have considered random fields $\phi(\x)$ in either 2D or 3D Euclidean space.
+In this section, we will study random fields $\phi(\n)$ defined on the sphere, where $\n = (n_x, n_y, n_z)$
+is a unit three-vector.
+The canonical example is the cosmic microwave background temperature $T(\n)$.
+
+We will use some special functions in this section: the spherical harmonics $Y_{lm}$,
+and the Legendre polynomials $P_l(x)$.  Properties of these special functions are
+summarized in Appendix~\ref{app:curved_sky}.
+
+We will omit the proof of the following completeness theorem.
+An arbitrary function $\phi(\n)$ may be expanded in spherical harmonics as:
+\be
+\phi(\n) = \sum_{l=0}^\infty \sum_{m=-l}^l a_{lm} Y_{lm}(\n)   \label{eq:sht1}
+\ee
+where the coefficients $a_{lm}$ are defined for integers $l,m$ such that $l \ge 0$ and $-l \le m \le l$.
+The coefficients $a_{lm}$ can be determined from the field $\phi(\n)$ by doing the following integral:
+\be
+a_{lm} = \int d^2\n \, \phi(\n) Y_{lm}^*(\n)  \label{eq:sht2}
+\ee
+This follows from Eq.~(\ref{eq:sht1}), by multiplying both sides by $Y_{lm}(\n)^*$, and using the
+orthogonality identity in Eq.~(\ref{eq:ylm_orth}).  Note that $d^2\n$ denotes the rotation-invariant
+area element on the sphere (i.e.~$d^2\n = \sin\theta \, d\theta \, d\phi$ in coordinates $\theta,\phi$).
+
+Taken together, Equations~(\ref{eq:sht1}) and~(\ref{eq:sht2}) define an invertible transform 
+$\phi(\n) \leftrightarrow a_{lm}$ which exchanges a real-space field $\phi(\n)$ and its harmonic-space
+coefficients $a_{lm}$.  This is the ``spherical harmonic transform'', the curved-sky analog of the
+2D Euclidean Fourier transform $\phi(\x) \rightarrow \tphi(\l)$, defined by:
+\be
+\tphi(\l) = \int d^2\x \, \phi(\x) e^{-i\l\cdot\x}
+  \hspace{1.5cm}
+\phi(\x) = \int \frac{d^2\l}{(2\pi)^2} \tphi(\l) e^{i\l\cdot\x}
+\ee
+Here is one interesting difference between the spherical harmonic transform and the Fourier transform.
+The functional form of the Fourier transform $\phi(\x) \rightarrow \tphi(\l)$ is the same (except for a 
+sign change $i \rightarrow -i$) as the inverse Fourier transform $\tphi(\l) \rightarrow \phi(\x)$.
+In constrast, the spherical harmonic transform in Eq.~(\ref{eq:sht1}) and its inverse in Eq.~(\ref{eq:sht2})
+look very different.
+The real-space representation of a curved-sky field (a function $\phi(\n)$) also looks very different from
+its harmonic-space representation (a discrete set of coefficients $a_{lm}$).
+
+Here is another theorem whose proof we will omit.
+If the statistics of a random field are rotationally invariant, then its harmonic-space two-point
+correlation function has the constrained form:
+\be
+\langle a_{l m}^* a_{l'm'} \rangle C_l \delta_{ll'} \delta_{mm'}   \label{eq:cl_def}
+\ee
+where the power spectrum $C_l$ is defined by this equation.  This is the curved-sky analog of
+Eq.~(\ref{eq:pk_def}), which defines the power spectrum $P(k)$ assuming translation and rotation
+invariance.
+
+In the following problems, we will work out more properties of curved-sky fields.
+
+\begin{enumerate}
+
+\item {\bf Real-valuedness.} If $\phi(\n)$ is real-valued in real space, show that the harmonic-space 
+ coefficients satisfy $a_{l,-m} = (-1)^m a_{lm}^*$.  Assuming rotation invariance, write an expression 
+ for the expectation value
+\be
+\langle a_{lm} a_{l'm'} \rangle
+\ee
+ (with no complex conjugate appearing) in terms of the power spectrum $C_l$.  
+ What are the analogs of these statements for a 2D Euclidean field $\phi(\x)$?
+
+\item {\bf Variance.} Using identities from Appendix~\ref{app:curved_sky}, show that the variance 
+ $\langle \phi(\n)^2 \rangle$ of a curved-sky random field is related to its power spectrum $C_l$ by:
+\be
+\langle \phi(\n)^2 \rangle = \sum_l \frac{2l+1}{4\pi} C_l
+\ee
+ What is the Euclidean analog?
+
+\item {\bf Correlation function.} If the statistics of a random field are rotation invariant, then its {\em real-space}
+ two-point correlation function $\langle \phi(\n) \phi(\n') \rangle$ only depends on the angle
+ $\theta_{\n\n'}$ between $\n$ and $\n'$, or equivalently the dot product $(\n\cdot\n') = \cos(\theta_{\n\n'})$.  
+ That is,
+\be
+ \langle \phi(\n) \phi(\n') \rangle = \zeta(\theta_{\n\n'})  \label{eq:cf_def}
+\ee
+ where the {\em correlation function} $\zeta(\theta)$ is defined by this equation.
+
+ Starting from the definition of the correlation function in Eq.~(\ref{eq:cf_def}),
+ plug in Eq.~(\ref{eq:sht1}) and use identities in Appendix~\ref{app:curved_sky}
+ to show that the correlation function is related to the power spectrum by:
+\be
+ \zeta(\theta) = \sum_l \frac{2l+1}{4\pi} \, C_l \, P_l(\cos\theta)  \label{eq:clcf1}
+\ee
+ Using orthogonality of the Legendre polynomials (Eq.~(\ref{eq:pl_orth}), show how
+ to invert Eq.~(\ref{eq:clcf2}), obtaining the relation:
+\be
+C_l = 2\pi \int_{-1}^1 d(\cos\theta) \, \zeta(\theta) \, P_l(\cos\theta)  \label{eq:clcf2}
+\ee
+ What are the Euclidean analogs of Eqs.~(\ref{eq:clcf1}),~(\ref{eq:clcf2})?
+
+\item {\bf Gaussian white noise.}
+ A ``Gaussian white noise'' field $\eta(\x)$ is defined by the following statements.  Suppose that we
+ measure the average value of $\eta$ over a sky pixel with angular size $d\Omega$ steradians.
+ Then the result is a Gaussian random variable with mean zero and variance $\Delta^2 (d\Omega)^{-1}$,
+ where $\Delta$ is a constant which parameterizes the amplitude of the noise.
+ If we measure the values of $\eta$ in non-overlapping pixels, then the measurements are independent.
+
+ First, explain why the $(d\Omega)^{-1}$ scaling makes sense.  That is, give an intuitive argument
+ why the exponent should be -1, rather than some other value.
+
+ Second, compute the correlation function $\zeta(\theta)$ and power spectrum $C_l$ of a Gaussian
+ white noise field $\eta$.
+
+\item {\bf Beam convolution.}
+ Suppose that a Gaussian random field $\phi(\n)$ is convolved with an azimuthally symmetric beam profile $b(\theta)$.
+ That is, we define a new random field $\psi(\n)$ by:
+\be
+ \psi(\n) = \int d^2\n' \, b(\theta_{\n\n'}) \, \phi(\n')
+\ee
+ Show that the harmonic-space representations $a_{lm}^\phi$ and $a_{lm}^\psi$ are related by:
+\be
+ a_{lm}^\psi = b_l a_{lm}^\phi
+\ee
+ where $b_l$ are the coefficients in the expansion of $b(\theta)$ in Legendre polynomials:
+\be
+ b(\theta) = \sum_l \frac{2l+1}{4\pi} \, b_l \, P_l(\cos\theta)
+\ee
+ How is the power spectrum $C_l^\psi$ related to $C_l^\phi$?
+
+\item {\bf Fisher matrix.}
+ Now consider a curved-sky Gaussian random field whose power spectrum $C_l$ depends on cosmological
+ parameters $\pi_1, \cdots, \pi_N$.  We assume that we have rough fiducial guesses $\pi_i^{rm fid}$,
+ and therefore a rough fiducial guess for the power spectrum $C_l^{\rm fid}$.
+
+ Suppose that we observe the Fourier modes $a_{lm}$ over some range of multipoles $l_{\rm min} \le l \le l_{\rm max}$.
+ Write an expression for the posterior likelihood function $\L[\pi_i|a_{lm}]$ of the cosmological parameters,
+ given the data $a_{lm}$.
+
+ Now recall the general definition of the Fisher matrix:
+\be
+ F_{ij} = -\left\langle \frac{\partial^2\log\L[\pi_i|a_{lm}]}{\partial\pi_i \partial\pi_j} \right\rangle
+\ee
+ where the expectation value $\langle \cdot \rangle$ is taken over random realizations of the data $a_{lm}$
+ in the fiducual model.  Using your expression for the posterior likelihood, compute the Fisher matrix and
+ show that it is given by:
+\be
+ F_{ij} = \sum_{l=l_{\rm min}}^{l_{\rm max}} \left( \frac{2l+1}{2} \right) \frac{(\partial C_l / \partial\pi_i)(\partial C_l/\partial\pi_j)}{(C_l^{\rm fid})^2}  \label{eq:F_C}
+\ee
+ What would be the analogous expression for the Fisher matrix for a Euclidean 2D field?
+
+\item {\bf Noise and beam.}
+ Now suppose that instead of observing the field $a_{lm}$ directly, we observe the noisy beam-convolved field $(b_l a_{lm} + \eta_{\ell m})$,
+ where $b_l$ is a known beam profile (see ``Beam convolution'' above), and $\eta_{\ell m}$ is a Gaussian white noise field with known
+ amplitude $\Delta$ (see ``Gaussian white noise'' above).
+
+ In this situation, how would Eq.~(\ref{eq:F_C}) for the Fisher matrix change?
+ We will use this result in the next section, to forecast parameter constraints from the CMB!
+
+\end{enumerate}
+
+\clearpage
+
 \appendix
 
 \section{Gaussian probability distribution}
@@ -343,6 +504,95 @@ For example:
 \langle x^3 \rangle = \mu^3 + 3 \sigma^2 \mu
   \hspace{1cm}
 \langle x^4 \rangle = \mu^4 + 6 \sigma^2 \mu^2 + 3 \sigma^4
+\ee
+
+\section{Curved-sky special functions}
+\label{app:curved_sky}
+
+In this section, $\n = (n_x, n_y, n_z)$ denotes a unit three-vector, and a function
+defined on the unit sphere will be denoted $f(\n)$.  Sometimes we will switch to 
+spherical polar coordinates $(\theta,\phi)$, and write $f(\theta,\phi)$ instead,
+where:
+\be
+n_x = (\sin\theta)(\cos\phi)
+  \hspace{1cm}
+n_y = (\sin\theta)(\sin\phi)
+  \hspace{1cm}
+n_z = \cos\theta
+\ee
+
+\subsection{Spherical harmonics}
+
+The spherical harmonic $Y_{lm}(\n)$ is a special function defined for integers $l \ge 0$
+and $-l \ge m \le l$.  Just for concreteness, the first few spherical harmonics are given by:
+\ba
+Y_{00}(\theta,\phi) &=& \frac{1}{\sqrt{4\pi}} \nn \\
+Y_{10}(\theta,\phi) &=& \sqrt{\frac{3}{4\pi}} (\cos\theta) \nn \\
+Y_{1,\pm 1}(\theta,\phi) &=& \mp \sqrt{\frac{3}{8\pi}} (\sin\theta) e^{\pm i\phi} \nn \\
+Y_{20}(\theta,\phi) &=& \sqrt{\frac{5}{16\pi}} (3 \cos^2\theta - 1) \nn  \\
+Y_{2,\pm 1}(\theta,\phi) &=& \mp \sqrt{\frac{15}{8\pi}} (\sin\theta) (\cos\theta) e^{\pm i \phi} \nn \\
+Y_{2,\pm 2}(\theta,\phi) &=& \sqrt{\frac{15}{32\pi}} (\sin^2\theta) e^{\pm 2 i \phi}
+\ea
+The spherical harmonics are a {\em complete, orthonormal} basis of functions on the unit sphere.
+Here, ``orthonormal'' means that:
+\be
+\int d^2\n \, Y_{lm}(\n) Y_{l'm'}^*(\n) = \delta_{ll'} \delta_{mm'}  \label{eq:ylm_orth}
+\ee
+where $d^2\n = \sin\theta \, d\theta \, d\phi$ is the rotation-invariant area element on the unit sphere.
+
+``Complete'' means that an arbitrary function $f(\n)$ can be expanded as an infinite series:
+\be
+f(\n) = \sum_{l=0}^\infty \sum_{m=-l}^l a_{lm} Y_{lm}(\n)  \label{eq:ylm_completeness}
+\ee
+for some choice of coefficients $a_{lm}$.  In fact, we can give an explicit formula for $a_{lm}$ as follows.  
+If we multiply both sides of Eq.~(\ref{eq:ylm_completeness})
+by $Y_{lm}^*(\n)$ and integrate over $\n$, then a short calculation using Eq.~(\ref{eq:ylm_orth}) gives:
+\be
+a_{lm} = \int d^2\n \, f(\n) Y_{lm}^*(\n)
+\ee
+There are a lot of useful identities involving spherical harmonics, which I'll collect systematically
+in a future version of these notes!  For now, one identity which will be very useful is:
+\be
+Y_{lm}(\n)^* = (-1)^m Y_{l,-m}(\n)
+\ee
+
+\subsection{Legendre polynomials}
+
+The Legendre polynomial $P_l(x)$ is a special function defined for integers $l \ge 0$.
+The first few Legendre polynomials are:
+\be
+P_0(x) = 1
+  \hspace{1.5cm}
+P_1(x) = x
+  \hspace{1.5cm}
+P_2(x) = \frac{3}{2}x^2 - \frac{1}{2}
+\ee
+The Legendre polynomials are an {\em orthogonal, complete} basis of functions defined on the interval $-1 \le x \le 1$.
+Here, ``orthogonal'' means:
+\be
+\int_{-1}^1 d\mu \, P_l(\mu) P_{l'}(\mu) = \frac{2}{2l+1} \delta_{ll'}  \label{eq:pl_orth}
+\ee
+Note that $P_l(x)$ is not unit-normalized (that is, the integral of $P_l^2$ is not equal to 1).
+Instead, the normalization is chosen so that
+\be
+P_l(1) = 1 \hspace{1cm} \mbox{for all $l$}
+\ee
+``Complete'' means that any function $f(x)$ defined for $-1 \le x \le 1$ has a series expansion:
+\be
+f(x) = \sum_{l=0}^\infty f_l P_l(x)  \label{eq:pl_completeness}
+\ee
+for some choice of coefficients $f_l$.
+In fact, we can give an explicit formula for $f_l$ as follows.  
+If we multiply both sides of Eq.~(\ref{eq:pl_completeness})
+by $P_l(x)$ and integrate over $x$, then a short calculation using Eq.~(\ref{eq:pl_orth}) gives:
+\be
+f_l = \frac{2l+1}{2} \int_{-1}^1 dx \, f(x) P_l(x)
+\ee
+There are a lot of useful identities involving Legendre polynomials, which I'll collect systematically
+in a future version of these notes!  For now, it will be very useful to have the following identity
+relating spherical harmonics and Legendre polynomials:
+\be
+\sum_{m=-l}^l Y_{lm}^*(\n) \, Y_{lm}(\n') = \frac{2l+1}{4\pi} P_l(\n\cdot\n')
 \ee
 
 \end{document}
