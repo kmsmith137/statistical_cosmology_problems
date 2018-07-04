@@ -9,8 +9,8 @@
 \usepackage{amsfonts}
 \usepackage{color}
 \usepackage{mathrsfs}
+\usepackage{url}
 % \usepackage{comment}
-% \usepackage{url}
 % \usepackage{wick}
 % \usepackage{feynmp}
 % \usepackage{braket}
@@ -479,6 +479,133 @@ C_l = 2\pi \int_{-1}^1 d(\cos\theta) \, \zeta(\theta) \, P_l(\cos\theta)  \label
 
  In this situation, how would Eq.~(\ref{eq:F_C}) for the Fisher matrix change?
  We will use this result in the next section, to forecast parameter constraints from the CMB!
+
+\end{enumerate}
+
+\clearpage
+
+\section{Multiple fields and random variables}
+
+Consider the following general setup.  Let $\{ x_\alpha \}_{1\le \alpha\le m}$ be an $m$-component Gaussian random
+variable, with mean zero, and $m$-by-$m$ covariance matrix $C_{\alpha\beta}$.  Suppose that $C$ depends on model parameters
+$\{ \pi_i \}_{1\le i \le n}$.  We are interested in forecasting parameter constraints on the parameters $\pi_i$
+near a specified fiducial model.
+
+For context, it may be useful to imagine the case where the $m$-component vector $x_\alpha$ consists of the
+real and complex parts of every CMB multipole $a_{lm}$, with $m = (l_{\rm max}+1)^2 \approx 10^6$, and the
+model parameters $\pi_i$ are cosmological parameters (with $n=6$ or so).  In this case, the off-diagonal entries
+in $C$ will be zero (since different $a_{lm}$'s are uncorrelated, see the second problem below).  However, we
+will also analyze cases with nonzero off-diagonal entries.
+
+\begin{enumerate}
+
+\item {\bf General expression for the Fisher matrix.}
+Show that the $n$-by-$n$ Fisher matrix is given by:
+\be
+F_{ij} = \frac{1}{2} \mbox{Tr} \left( C^{-1} \frac{\partial C}{\partial\pi_i} C^{-1} \frac{\partial C}{\partial\pi_j} \right)  \label{eq:F_nbyn}
+\ee
+where $C$ and $(\partial C / \partial\pi_i)$ on the RHS are evaluated in the fiducial model.
+
+Some hints: the definition of the Fisher matrix is
+\be
+F_{ij} = -\left\langle \frac{\partial^2 \L[x|\pi]}{\partial\pi_i \, \partial\pi_j} \right\rangle_x
+\ee
+where $\L[x|\pi]$ is the conditional likelihood of data realization $x_\alpha$, given model parameters $\pi_i$.
+
+Feel free to assume the following formulas without proof.
+The derivative of a determinant is given by ``Jacobi's formula'':
+\be
+\delta \mbox{Det}(A) = \mbox{Det}(A) \, \mbox{Tr}(A^{-1} \, \delta A)
+\ee
+where $\delta$ denotes any type of derivative operator (for example the partial derivative $\partial/\partial\pi_i$).
+Expectation values of products of Gaussian random variables are given by Wick's theorem, which roughly means ``sum over
+contractions''.  For example, the four-point expectation value $\langle x_\alpha x_\beta x_\gamma x_\delta \rangle$ is:
+\be
+\langle x_\alpha x_\beta x_\gamma x_\delta \rangle = C_{\alpha\beta} C_{\gamma\delta} + C_{\alpha\gamma} C_{\beta\delta} + C_{\alpha\delta} C_{\beta\gamma}
+\ee
+
+\item {\bf CMB temperature likelihood.}
+Now consider the special case where $x_\alpha$ is a vector consisting of the real and complex parts of the CMB multipoles $a_{lm}$,
+up to maximum multipole $l_{\rm max}$.  What is the covariance matrix $C$, in terms of the CMB power spectrum $C_l$?  By specializing
+the general expression (Eq.~(\ref{eq:F_nbyn})) for the Fisher matrix, show that the CMB Fisher matrix is
+\be
+F_{ij} = \sum_{l=l_{\rm min}}^{l_{\rm max}} \left( \frac{2l+1}{2} \right) \frac{(\partial C_l / \partial\pi_i)(\partial C_l/\partial\pi_j)}{(C_l^{\rm fid})^2}
+\ee
+We derived this result previously in Eq.~\ref{eq:F_C}, using a less general formalism.
+\setcounter{enumi_save}{\value{enumi}}
+\end{enumerate}
+
+\par\noindent
+So far, all of our CMB results have assumed that only the CMB {\em temperature} is measured.
+In the next two problems, we will compute the Fisher matrix for CMB polarization.
+This is a specific example of a Fisher matrix involving multiple fields.
+The general formula for the Fisher matrix in Eq.~(\ref{eq:F_nbyn}) can be used to analyze
+this and other multifield examples.
+
+CMB polarization can be decomposed into ``E-mode'' and ``B-mode'' components.
+The E-B decomposition is similar in spirit to the decomposition of a vector field into gradient and curl 
+components (but not identical, since linear polarization is a traceless symmetric matrix, not a vector).
+The precise definition of the E-B decomposition is nontrivial, and we omit it for now, except for the following 
+synopsis.
+
+The CMB polarization can be represented as a sequence of E-mode multipoles $a_{lm}^E$ and B-mode multipoles $a_{lm}^B$.
+(To avoid ambiguity, we will denote the temperature multipoles by $a_{lm}^T$ instead of $a_{lm}$.)
+Correlations between temperature, E-mode, and B-mode multipoles are given by:
+\ba
+\langle a_{lm}^{T*} a_{l'm'}^T \rangle &=& C_l^{TT} \delta_{ll'} \delta_{mm'} \\
+\langle a_{lm}^{T*} a_{l'm'}^E \rangle &=& C_l^{TE} \delta_{ll'} \delta_{mm'} \\
+\langle a_{lm}^{E*} a_{l'm'}^E \rangle &=& C_l^{EE} \delta_{ll'} \delta_{mm'} \\
+\langle a_{lm}^{B*} a_{l'm'}^B \rangle &=& C_l^{BB} \delta_{ll'} \delta_{mm'} \\
+\langle a_{lm}^{T*} a_{l'm'}^B \rangle &=& 0  \\
+\langle a_{lm}^{E*} a_{l'm'}^B \rangle &=& 0
+\ea
+with four power spectra $C_l^{TT}$, $C_l^{TE}$, $C_l^{EE}$, $C_l^{BB}$.\footnote{As an aside,
+ we mention that invariance under reflection symmetry implies that there are no TB or EB correlations.}
+These power spectra can be obtained numerically from CAMB or CLASS.\footnote{For an example plot of all four power spectra, see
+ \url{http://background.uchicago.edu/~whu/polar/webversion/node16.html}.}
+
+\begin{enumerate}
+\setcounter{enumi}{\value{enumi_save}}
+
+\item {\bf CMB temperature + E-mode polarization.}
+Suppose that the temperature multipoles $a_{lm}^T$ have been observed with noise power spectrum $N_l^{TT}$,
+and the E-mode multipoles $a_{lm}^E$ have been observed with noise power spectrum $N_l^{EE}$.
+In this problem, we temporarily assume that the B-mode multipoles $a_{lm}^B$ have not been observed.
+
+If the CMB power spectra $C_l^{TT}, C_l^{TE}, C_l^{EE}$ depend on cosmological parameters $\pi_i$,
+show that the Fisher matrix is:
+\be
+F_{ij} = \sum_{l=l_{\rm min}}^{l_{\rm max}} \left( \frac{2l+1}{2} \right) 
+   \mbox{Tr}\left( {\bf C}^{-1}_l \frac{\partial {\bf C}_l}{\partial \pi_i} {\bf C}^{-1}_l \frac{\partial {\bf C}_l}{\partial \pi_j} \right)
+\ee
+where ${\bf C}_l$ is the 2-by-2 matrix
+\be
+{\bf C}_l = \left( \begin{array}{cc}
+ C_l^{TT} + N_l^{TT} & C_l^{TE} \\
+  C_l^{TE} & C_l^{EE} + N_l^{EE}
+\end{array} \right)
+\ee
+
+\item {\bf CMB temperature + EB polarization.}
+Now suppose that all three CMB fields $a_{lm}^T$, $a_{lm}^E$, $a_{lm}^B$ have been observed,
+with noise power spectra $N_l^{TT}$, $N_l^{EE}$, $N_l^{BB}$.  What is the Fisher matrix
+in this case?
+
+\item {\bf Multiple 3D fields.}
+Finally, we consider a general problem involving multiple fields in 3D.
+Suppose that we observe $N$ three-dimensional fields $g_1(\k), \cdots, g_N(\k)$.
+For example, the $g$ fields could be number counts of $N$ different galaxy populations
+defined by different color cuts.
+To be fully general, we will suppose that the cross power spectra of the $g$ fields are
+arbitrary, i.e.
+\be
+\langle g_\alpha(\k)^* \, g_\beta(\k) \rangle = P_{\alpha\beta}(k) \, (2\pi)^3 \delta^3(\k-\k')
+\ee
+where $P_{\alpha\beta}(k)$ is a $k$-dependent $N$-by-$N$ matrix.
+
+If $P_{\alpha\beta}(k)$ depends on cosmological parameters $\pi_i$, what is the Fisher matrix?
+Express your answer in the form $P_{ij} = V \int dk \, (\cdots)$, where $V$ is the
+three-dimensional survey volume, and $(\cdots)$ involves $P_{ij}$ and $(\partial P_{ij}/\partial \pi_k)$.
 
 \end{enumerate}
 
