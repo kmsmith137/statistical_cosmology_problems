@@ -2,4 +2,7 @@
 *.aux
 *.log
 *.toc
+*.bbl
+*.blg
 statistical_cosmology_problems.pdf
+limber_approximation.pdf
