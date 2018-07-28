@@ -609,6 +609,62 @@ three-dimensional survey volume, and $(\cdots)$ involves $P_{ij}$ and $(\partial
 
 \end{enumerate}
 
+\section{The Limber approximation}
+\label{sec:limber}
+
+\par\noindent
+For background on the next two problems, see {\tt limber\_approximation.tex}.
+
+\begin{enumerate}
+
+\item
+{\bf Cross power spectra.}
+
+(a) Consider two galaxy samples, selected in narrow redshift bins near redshifts $z_1$ and $z_2$.
+Let $\kappa_1(\n), \kappa_2(\n)$ be the lensing convergence fields for the two galaxy samples.
+Using the Limber approximation, write an expression for the cross power spectrum $C_l^{\kappa_1\kappa_2}$
+as a one-dimensional integral.  What is the upper limit on the integral?
+
+(b) Consider two galaxy samples, with redshift distributions $(dn/dz)$ given by $n_1(z), n_2(z)$,
+and galaxy bias $b_1(z), b_2(z)$.  In the Limber approximation, what is the cross power spectrum
+$C_l^{\delta_{g1} \delta_{g2}}$?
+
+\item
+{\bf Lensing by point masses.}
+
+In this problem, we artificially assume that all matter is collapsed into {\em unclustered}
+dark matter halos with mass $M$, where $M$ does not depend on time.  We will also neglect
+halo profiles, and treat each halo as a point mass.  This is not a good model
+for large-scale structure at all!  It's just a toy model which will allow us to
+compute pencil-and-paper lensing power spectra without running CAMB.
+
+The calculations in this problem are somewhat long, so you might skip it (or just do part of it)
+if you'd prefer to prioritize other things in the ``study crunch'' leading up to the
+qualifying exam.
+
+(a)
+Show that the equal-time matter power spectrum $P(k,\tau)$ is:
+\be
+P(k,\tau) = \frac{8 \pi G M}{3 \Omega_m H_0^2}  \hspace{1cm} \mbox{(independent of $k,\tau$)}
+\ee
+Note that in this model, matter fluctuations do not grow via gravitational collapse
+(since $P(k,\tau)$ is independent of time).
+
+(b)
+Given a population of galaxies at source redshift $z_s$, let $\kappa(\n)$
+be the corresponding convergence field.  Using the Limber approximation, write
+$C_l^{\kappa\kappa}$ as a one-dimensional integral.
+
+(c)
+Now suppose the expansion is matter dominated (i.e.~$\Omega_m=1$ for all times).
+By evaluating the integral from part (c), show that $C_l^{\kappa\kappa}$ is given by:
+\be
+C_l^{\kappa\kappa} = 4\pi G M H_0 \, \Big( 1 + z_s \Big) \Big( \sqrt{1+z_s} - 1 \Big) \left( 1 + \frac{3}{\sqrt{1+z_s}} \right)
+  \hspace{1cm} \mbox{(independent of $l$)}
+\ee
+
+\end{enumerate}
+
 \appendix
 
 \section{Gaussian probability distribution}
