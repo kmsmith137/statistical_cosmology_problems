@@ -1,0 +1,408 @@
+\documentclass[aps,prd,superscriptaddress,groupedaddress,nofootinbib,nobibnotes]{revtex4}
+
+\usepackage{graphicx}
+\usepackage{dcolumn}
+\usepackage{bm}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{color}
+\usepackage{mathrsfs}
+% \usepackage{comment}
+% \usepackage{url}
+% \usepackage{wick}
+% \usepackage{feynmp}
+% \usepackage{braket}
+
+\setlength{\parindent}{20pt}
+% \setlength{\parskip}{1mm}
+
+\setcounter{topnumber}{1}    % default value is 2.
+\setcounter{bottomnumber}{0} % default value is 1.
+
+\hyphenation{ALPGEN}
+\hyphenation{EVTGEN}
+\hyphenation{PYTHIA}
+
+\newcommand{\kms}[1]{\textcolor{blue}{(KMS: #1)}}
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\ba}{\begin{eqnarray}}
+\newcommand{\ea}{\end{eqnarray}}
+\newcommand{\nn}{\nonumber}
+\newcommand{\barr}{\begin{array}}
+\newcommand{\earr}{\end{array}}
+\newcommand{\eqdef}{\stackrel{\rm def}{=}}
+\newcommand{\bigoh}{\mathcal{O}}
+
+\newcommand\lsim{\mathrel{\rlap{\lower4pt\hbox{\hskip1pt$\sim$}}
+        \raise1pt\hbox{$<$}}}
+\newcommand\gsim{\mathrel{\rlap{\lower4pt\hbox{\hskip1pt$\sim$}}
+        \raise1pt\hbox{$>$}}}
+
+\def\threej#1#2#3#4#5#6{\left( \begin{array}{ccc} #1 & #2 & #3 \\ #4 & #5 & #6 \end{array} \right) }
+\def\smallsum{\mathop{\textstyle\sum}\limits}
+\def\Var{\mbox{Var}}
+\def\Cov{\mbox{Cov}}
+\def\x{{\bf x}}
+\def\l{{\bf l}}
+\def\L{{\bf L}}
+\def\hphi{{\hat\phi}}
+
+\renewcommand{\baselinestretch}{1.1}
+
+\begin{document}
+
+\title{CMB lensing problems}
+
+\author{Kendrick~M.~Smith}
+\affiliation{Perimeter Institute for Theoretical Physics, Waterloo, ON N2L 2Y5, Canada}
+
+\date{\today}
+
+% \begin{abstract}
+% ABSTRACT HERE
+% \end{abstract}
+% \pacs{}
+
+\maketitle
+
+\par\noindent
+In this version of the problems, we make the following simplifying assumptions:
+\begin{enumerate}
+\item We assume an infnite-area flat sky.
+\item We only consider CMB temperature (not polarization).
+\item The CMB lensing deflection field ${\bf d}(\x)$ is assumed to be curl-free,
+  i.e.~${\bf d} = \nabla \phi$ for some choice of potential
+  $\phi(\x)$.  (This is true to first order in the cosmological perturbations,
+  but not higher orders.)
+\item We assume that the {\em unlensed} CMB $T_{\rm unl}$ and lensing potential $\phi$
+  are statistically independent.  (This is an excellent approximation on most angular scales,
+  but breaks down on small scales and very large scales, due to the ISW effect.)
+\end{enumerate}
+In future versions, these assumptions may be relaxed!
+
+\section{Definitions and notation}
+
+Let $T_{\rm unl}(\x)$ be the unlensed CMB temperature.
+Our Fourier conventions are:
+\be
+T_{\rm unl}(\x) = \int \frac{d^2\l}{(2\pi)^2} \, T_{\rm unl}(\l) e^{i\l\cdot\x}
+\hspace{1.5cm}
+T_{\rm unl}(\l) = \int d^2\x \, T_{\rm unl}(\x) e^{-i\l\cdot\x}  \label{eq:continuous_fourier_conventions}
+\ee
+The unlensed CMB is a Gaussian field, i.e. its two-point function is:
+\be
+\big\langle T_{\rm unl}(\l) T_{\rm unl}(\l')^* \big\rangle = C_l^{\rm unl} \, (2\pi)^2 \delta^2(\l-\l')  \label{eq:continuous_cl}
+\ee
+and higher-point correlation functions are obtained by applying Wick's theorem.
+The unlensed CMB power spectrum $C_l^{\rm unl}$ can be computed numerically using
+CAMB or CLASS.
+
+The lensed CMB is given by:
+\be
+T_{\rm len}(\x) = T_{\rm unl}\big( \x + \nabla\phi(\x) \big)  \label{eq:tlen_def}
+\ee
+where the field $\phi(\x)$ is the CMB lensing potential.
+That is, the lensed CMB is obtained from the unlensed CMB by remapping points
+on the sky, via a deflection field $\x \rightarrow \x + {\bf d}(\x)$ which is
+curl-free (i.e.~${\bf d} = \nabla\phi$ for some choice of potential $\phi$).
+The power spectrum $C_l^{\phi\phi}$ can be computed numerically
+using CAMB/CLASS.  However, $\phi$ is not a Gaussian field,
+so the power spectrum $C_l^{\phi\phi}$ does not fully
+characterize it.
+
+Since CMB lensing deflections are small (a typical deflection
+angle $|\nabla\phi|$ is a few arcminutes), we often expand lensing-related
+quantities in powers of $\phi$.  For example, the lensed CMB map in Eq.~(\ref{eq:tlen_def}) can be
+expanded as follows:
+\be
+T_{\rm len}(\x) = T_{\rm unl}(\x) + \big( \partial_i\phi(\x) \big) \big( \partial_i T_{\rm unl}(\x) \big)
+ + \frac{1}{2} \big( \partial_i\phi(\x) \big) \big( \partial_j(\phi(x) \big) \big(\partial_i \partial_j T_{\rm unl}(\x)\big)
+ + \bigoh(\phi^3)
+\ee
+The power spectrum $C_l^{\rm len}$ of the lensed CMB is not equal
+to $C_l^{\rm unl}$!  The lensed power spectrum $C_l^{\rm len}$ can also be computed
+using CAMB/CLASS.  (In problem 2 below, you'll calculate $C_l^{\rm len}$
+to order $\bigoh(\phi^2)$.)
+
+Let $T_{\rm obs}$ be the observed CMB:
+\be
+T_{\rm obs}(\x) = T_{\rm len}(\x) + N(\x)
+\ee
+where $N(\x)$ is the instrumental noise.  We will assume that $N(\x)$ is an isotropic
+Gaussian field with power spectrum $N_l$ (the noise power spectrum).  This is a common
+assumption in theory/forecasting papers, but real experiments have complicated noise models!
+We will denote the power spectrum of the observed CMB by $C_l^{\rm tot} = C_l^{\rm len} + N_l$.
+
+\section{Theory problems}
+\label{sec:theory_problems}
+
+\par\noindent
+Problems in this section are pencil-and-paper calculations.  The next section (\S\ref{sec:computer_problems}) contains computer problems.
+
+\begin{enumerate}
+
+\item {\bf Two-point function of T in a fixed lens.}
+  Let $\langle \cdot \rangle_T$ denote an expectation value over random realizations
+  of the {\em unlensed} CMB temperature, in a fixed realization of the lensing potential $\phi$.
+  Show that:
+\ba
+\big\langle T_{\rm len}(\l_1) T_{\rm len}(\l_2) \big\rangle_T
+&=& C_{l_1}^{\rm unl} (2\pi)^2 \delta^2(\l_1+\l_2) + K_1(\l_1,\l_2) \phi(\l_1+\l_2) \nn \\
+&& \hspace{0.5cm} + \int \frac{d^2\l}{(2\pi)^2} \, K_2(\l,\l_1,\l_2) \phi(\l_1-\l) \phi(\l_2+\l) + \bigoh(\phi^3) \label{eq:2pf_fixed_lens}
+\ea
+where the first-order and second-order kernels $K_1,K_2$ are defined by:
+\ba
+K_1(\l_1,\l_2) &=& -\big[ \l_1\cdot(\l_1+\l_2) \big] C_{l_1}^{\rm unl} - \big[ \l_2\cdot(\l_1+\l_2) \big] C_{l_2}^{\rm unl} \\
+K_2(\l,\l_1,\l_2) &=&
+\frac{1}{2} \big[ \l_2 \cdot(\l_1-\l) \big] \big[ \l_2 \cdot (\l_2+\l) \big] C_{l_2}^{\rm unl}
++ \frac{1}{2} \big[ \l_1 \cdot(\l_1-\l) \big] \big[ \l_1 \cdot (\l_2+\l) \big] C_{l_1}^{\rm unl} \nn \\
+&& \hspace{0.5cm}
+- \big[ \l\cdot(\l_1-\l) \big] \big[ \l \cdot (\l_2+\l) \big] C_l^{\rm unl}
+\ea
+Note that most terms on the RHS of Eq.~(\ref{eq:2pf_fixed_lens}) do not contain $\delta^2(\l_1+\l_2)$.
+This is because translation invariance is broken by the fixed lens realization.
+
+\item {\bf Lensed CMB power spectrum.}
+By averaging the RHS of Eq.~(\ref{eq:2pf_fixed_lens}) over $\phi$, show that
+\be
+\big\langle T_{\rm len}(\l_1) T_{\rm len}(\l_2) \big\rangle = C_l^{\rm len} \, (2\pi)^2 \delta^2(\l_1+\l_2)  \label{eq:2pf_lens_averaged}
+\ee
+where the lensed CMB power spectrum $C_l^{\rm len}$ is:
+\be
+C_l^{\rm len} = C_l^{\rm unl} + \int \frac{d^2\l'}{(2\pi)^2} \, \bigg(
+\big[ \l' \cdot (\l-\l') \big]^2 C_{l'}^{\rm unl} - \big[ \l \cdot (\l-\l') \big]^2 C_l^{\rm unl}
+\bigg) C_{|\l-\l'|}^{\phi\phi} + \bigoh(\phi^3)
+\ee
+In Eq.~(\ref{eq:2pf_lens_averaged}), $\langle \cdot \rangle$ denotes an expectation value
+of realizations of both the unlensed CMB and the lensing potential.
+Note that the delta function $\delta^2(\l_1+\l_2)$ now appears on the RHS of Eq.~(\ref{eq:2pf_lens_averaged}),
+since translation invariance is restored by averaging over the lens realization.
+
+\item {\bf Quadratic estimator.}
+In this megaproblem, we'll derive the quadratic estimator $\hphi$ for reconstructing the lensing potential from the CMB.
+
+The idea is as follows.  Consider the first two terms in Eq.~(\ref{eq:2pf_fixed_lens}):
+\be
+\big\langle T_{\rm len}(\l_1) T_{\rm len}(\l_2) \big\rangle_T = C_{l_1}^{\rm unl} (2\pi)^2 \delta^2(\l_1+\l_2) + K_1(\l_1,\l_2) \phi(\l_1+\l_2) + \cdots
+\ee
+If $\l_1+\l_2 \ne 0$, we can think of the product $(T_{\rm obs}(\l_1) T_{\rm obs}(\l_2))$ as a noisy estimator
+of $\phi(\l_1+\l_2)$, since its expectation value is proportional to $\phi(\l_1+\l_2)$.  For a single pair of
+Fourier modes $(\l_1,\l_2)$, this would be a very noisy estimate of $\phi(\l_1+\l_2)$.  However, for a fixed
+lensing mode $\phi(\L)$, we can sum over all pairs $(\l_1,\l_2)$ satisfying $\l_1+\l_2=\L$, to get an estimate
+of $\phi(\L)$ with interesting SNR.
+
+More formally, we consider an estimator of the form:
+\be
+\hphi(\L) = \int_{\l_1+\l_2=\L} W(\l_1,\l_2) \, T_{\rm obs}(\l_1) T_{\rm obs}(\l_2)
+\ee
+with weight function $W(\l_1,\l_2)$ to be determined shortly.
+Here, we have used the notation:
+\be
+\int_{\l_1+\l_2 = \L} \equiv \int \frac{d^2\l_1}{(2\pi)^2} \, \frac{d^2\l_2}{(2\pi)^2} \, (2\pi)^2 \delta^2(\l_1+\l_2-\L)
+\ee
+Without loss of generality, we assume $W(\l_1,\l_2) = W(\l_2,\l_1)$ and $W(\l_1,\l_2)^* = W(-\l_1,-\l_2)$.  (Why is this justified?)
+
+Show that to first order in $\phi$, the expectation value $\langle \hphi(\L) \rangle_T$ is given by:
+\be
+\langle \hphi(\L) \rangle_T = \int_{\l_1+\l_2=\L} W(\l_1,\l_2) \big[ -\l_2\cdot(\l_1+\l_2) \big] C_{l_2}^{\rm unl} + \bigoh(\phi^2)
+\ee
+Also show that to zeroth order in $\phi$, the power spectrum of $\hphi$ is given by:
+\be
+\langle \hphi(\L) \hphi(\L')^* \rangle = N_L^{(0)} \, (2\pi)^2 \delta^2(\L-\L') + \bigoh(\phi^2)
+\ee
+where we have defined the $N^{(0)}$-bias by:
+\be
+N_L^{(0)} \equiv \frac{1}{2} \int_{\l_1+\l_2=\L} |W(\l_1,\l_2)|^2 C_{l_1}^{\rm tot} C_{l_2}^{\rm tot}  \label{eq:n0_w}
+\ee
+(The $N^{(0)}$ bias is just the power spectrum of $\hphi$ if no lensing signal is present.
+The motivation for the name ``$N^{(0)}$-bias'' will be explained later!)
+
+Now we ask: what choice of weight function $W(\l_1,\l_2)$ minimzes the $N^{(0)}$ bias in Eq.~(\ref{eq:n0_w}),
+subject to the constraint that $\langle \hphi(\L) \rangle_T = \phi(\L)$, i.e. $\hphi$ is an unbiased estimator of $\phi$?
+By solving a constrained optimization problem for $W$, arrive at the following explicit formulas
+for $\hphi(\L)$ and $N_L^{(0)}$:
+\ba
+N_L^{(0)} &=& \int_{\l_1+\l_2=\L} \frac{
+  \big[ ( \l_1\cdot \L ) C_{l_1}^{\rm unl} \big]
+  \big[ ( \l_1\cdot \L ) C_{l_1}^{\rm unl} + ( \l_2\cdot \L ) C_{l_2}^{\rm unl} \big]}{C_{l_1}^{\rm tot} C_{l_2}^{\rm tot}}  \label{eq:n0_fourier} \\
+\hphi(\L) &=& N_L^{(0)} \int_{\l_1+\l_2=\L} \frac{(-\l_1\cdot \L) C_{l_1}^{\rm unl}}{C_{l_1}^{\rm tot} C_{l_2}^{\rm tot}}
+  \, T_{\rm obs}(\l_1) T_{\rm obs}(\l_2)  \label{eq:hphi_fourier}
+\ea
+
+\item {\bf Position-space representation.}
+The Fourier-space representations of $N_L^{(0)}$ and $\hphi(\L)$ in Eqs.~(\ref{eq:n0_fourier}),~(\ref{eq:hphi_fourier})
+appear to be computationally expensive.  Imagine that we want to use Eq.~(\ref{eq:hphi_fourier}) to compute every Fourier
+mode $\hphi(\L)$, on a finite pixelized flat sky represented as an $(N,N)$-array.  Thus the number of pixels
+is $N^2$, and the number of Fourier modes is also $N^2$.  We outer-loop over $\L$ values, and for each $\L$
+we inner-loop over pairs $(\l_1,\l_2)$ such that $\l_1+\l_2=\L$.  Both loops have $N^2$ iterations, so the
+computational cost appears to be $\bigoh(N^4)$.
+
+It turns out that $N_L^{(0)}$ and $\hphi(\L)$ have position-space representations with computational cost
+$\bigoh(N^2 \log N)$, a huge improvement!  First, show that:
+\be
+N_L^{(0)} = -L_i L_j \int d^2\x \, e^{-i\L\cdot\x} \Big[
+  \big( \partial_i \gamma_1(\x) \big) \big( \partial_j \gamma_1(\x) \big) +
+  \gamma_0(\x) \big( \partial_i \partial_j \gamma_2(\x) \big) \Big]
+\ee
+where we have defined the field:
+\be
+\gamma_p(\l) = \frac{(C_l^{\rm unl})^p}{C_l^{\rm tot}}
+\ee
+Second, show that:
+\be
+\hphi(\L) =  N_L^{(0)} (iL_i) \int d^2\x \, e^{-i\l\cdot\x} \Big( \alpha(\x) \, \partial_i \beta(\x) \Big)
+\ee
+where we have defined fields:
+\be
+\alpha(\l) = \frac{1}{C_l^{\rm tot}} T_{\rm obs}(\l)
+\hspace{1.5cm}
+\beta(\l) = \frac{C_l^{\rm unl}}{C_l^{\rm tot}} T_{\rm obs}(\l)
+\ee
+
+\item {\bf $N^{(1)}$-bias.}  Forthcoming!
+  
+\item {\bf Four-point function of the lensed CMB.}  Forthcoming!
+
+\item {\bf Optimal four-point estimator.}  Forthcoming!
+
+\newcounter{enumi_save}
+\setcounter{enumi_save}{\value{enumi}}
+\end{enumerate}
+
+\section{Computer problems}
+\label{sec:computer_problems}
+
+In the pencil-and-paper calculations in~\S\ref{sec:theory_problems}, an infinite-area, infinite-resolution flat sky was assumed.
+On the computer, you'll need to make both the area and resolution finite of course.
+I strongly recommend using periodic boundary conditions!
+Then the sky is represented by a shape $(N,N$) array, with sky area $\Theta_{\rm sky}^2$ and pixel area $\Theta_{\rm pix}^2 = (\Theta_{\rm sky}/N)^2$.
+Allowed Fourier modes are of the form $(l_x, l_y) = (2\pi/\Theta_{\rm sky}) (n_x, n_y)$, where $(n_x,n_y)$ are integers.
+
+When applying equations in~\S\ref{sec:theory_problems}, you'll need to figure out how to ``discretize'' each equation
+so that it applies to a finite pixelized sky.  This discretization process is actually fairly mechanical if you choose
+a uniform, consistent set of conventions.  In the next few paragraphs, I'll outline the conventions that I use.
+
+First, real-space and Fourier-space integrals are discretized as:
+\ba
+\int d^2\x \, (\cdots) & \rightarrow & \Theta_{\rm pix}^2 \sum_{\x} (\cdots)  \label{eq:discretize_x_integral}  \\
+\int \frac{d^2\l}{(2\pi)^2}  \, (\cdots) & \rightarrow & \frac{1}{\Theta_{\rm sky}^2} \sum_{\l} (\cdots)  \label{eq:discretize_l_integral}
+\ea
+These rules make intuitive sense: in Eq.~(\ref{eq:discretize_x_integral}), the pixel area $\Theta_{\rm pix}^2$ appears on
+the RHS, since the integral on the LHS contains the area element $d^2\x$.
+In Eq.~(\ref{eq:discretize_l_integral}), the factor $\Theta_{\rm sky}^{-2}$ appears on the RHS for a similar reason.
+The sum over $\l$ can be viewed as summing over an $l$-space ``pixelization'' with pixel area $(2\pi/\Theta_{\rm sky})^2$.
+Therefore, the factor $d^2\l/(2\pi)^2$ on the LHS becomes $(2\pi/\Theta_{\rm sky})^2 / (2\pi)^2 = \Theta_{\rm sky}^{-2}$
+on the RHS.
+
+Second, real-space and Fourier-space delta functions are discretized as:
+\be
+\delta^2(\x-\x') \rightarrow \frac{1}{\Theta_{\rm pix}^2} \delta_{\x\x'}
+\hspace{1.5cm}
+(2\pi)^2 \delta^2(\l-\l') \rightarrow \Theta_{\rm sky}^2 \delta_{\l\l'}  \label{eq:discretize_delta_functions}
+\ee
+This is required for consistency with our conventions for discretizing integrals in
+Eqs.~(\ref{eq:discretize_x_integral}),~(\ref{eq:discretize_l_integral}), since we want the
+identities $\int d^2\x \, \delta^2(\x-\x') = \int d^2\l \, \delta^2(\l-\l') = 1$ to hold.
+
+Additional discretization rules can be obtained via systematic application of
+Eqs.~(\ref{eq:discretize_x_integral})--(\ref{eq:discretize_delta_functions}).
+For example, the Fourier normalization conventions on a finite pixelized sky are:
+\be
+T(\x) = \frac{1}{\Theta_{\rm sky}^2} \sum_{\l} T(\l) e^{i\l\cdot\x}
+\hspace{1.5cm}
+T(\l) = \Theta_{\rm pix}^2 \sum_\x T(\x) e^{-i\l\cdot\x}  \label{eq:discrete_fourier_conventions}
+\ee
+by taking the continuous-sky Fourier conventions in Eq.~(\ref{eq:continuous_fourier_conventions}),
+and discretizing the integrals using Eqs.~(\ref{eq:discretize_x_integral}),~(\ref{eq:discretize_l_integral}).
+
+Similarly, the normalization for the power spectrum on a finite pixelized sky is:
+\be
+\big\langle T(\l) T(\l')^* \big\rangle = C_l \Theta_{\rm sky}^2 \delta_{\l\l'}  \label{eq:discrete_cl}
+\ee
+by taking the continuous-sky Eq.~(\ref{eq:continuous_cl}), and discretizing
+the delta functions using Eq.~(\ref{eq:discretize_delta_functions}).
+
+\begin{enumerate}
+\setcounter{enumi}{\value{enumi_save}}
+  
+\item {\bf Power spectrum of a Gaussian field.}
+  Write code to simulate the unlensed CMB temperature $T_{\rm unl}(\x)$ in real space, using the power spectrum $C_l^{\rm unl}$
+  from CAMB/CLASS.  Test your simulation code, by writing an ``analysis'' code which estimates the power spectrum of the real-space
+  field $T_{\rm unl}(\x)$, and verifying that the power spectrum of your simulations (averaged over many Monte Carlo simulations)
+  agrees with the input $C_l^{\rm unl}$.
+
+  This problem is more subtle than it appears!  When you simulate $T_{\rm unl}(\l)$ in Fourier space, you'll want to
+  ensure that the real-valuedness condition $T_{\rm unl}(\l)^* = T_{\rm unl}(-\l)$ is satisfied.  If $N$ is even, there
+  are a few high-$l$ ``Nyquist'' modes satisfying $\l = -\l$!  How should those be treated?
+
+\item {\bf Simulating the lensed CMB.}
+  Now write code to simulate the lensed CMB temperature $T_{\rm len}(\x)$.
+  Assume for simplicity that the lensing potential $\phi$ is a Gaussian field.
+  Since the lensed CMB is non-Gaussian, it cannot be simulated directly from the power spectrum $C_l^{\rm len}$.
+  To correctly capture the non-Gaussian statistics, you'll need simulate $T_{\rm unl}$ and $\nabla\phi$,
+  then apply the deflection operation in Eq.~(\ref{eq:tlen_def}).
+  
+  Estimate the power spectrum of your lensed CMB simulations, and verify agreement with
+  the lensed CMB power spectrum $C_l^{\rm len}$ from CAMB/CLASS.  (They will not agree exactly,
+  since the CAMB/CLASS calculation of $C_l^{\rm len}$ does not make the flat-sky approximation,
+  but the agreement will be very close.)
+
+  A little discussion on implementation issues which may arise!
+  
+  Here are two ways to simulate $\nabla\phi$ in real space: (1) simulate $\phi$ in real space,
+  and apply a real-space gradient operator defined by finite differencing, (2) simulate $\phi$
+  in Fourier space and multiply by $(i\l)$ before taking the Fourier transform.
+  For this problem, I think either should work, but I like (2) better since it's a bit more
+  numerically stable, and turns out to generalize better to the curved-sky case.
+
+  After you simulate $\nabla\phi(\x)$ and $T_{\rm unl}(\x)$ in real space on a regular grid,
+  you'll want to compute $T_{\rm len}(\x)$ on a regular grid, by applying the deflection
+  operation in Eq.~(\ref{eq:tlen_def}).  This will require you to evaluate $T_{\rm unl}(\x)$
+  at a sky location $\x$ which is not part of the grid.  This can be done by interpolation,
+  but interpolation requires higher resolution than you might initially expect.
+
+  To quantify this better, suppose we are interested in simulating the lensed CMB on some
+  range of scales $l \le l_{\rm max}$.  Naively, you might guess that the necessary angular
+  resolution is the Nyquist sampling rate $\Theta_{\rm pix} = \pi/l_{\rm max}$.  However,
+  you'll find that for the interpolation operation on the RHS of Eq.~(\ref{eq:tlen_def}),
+  you need angular resolution significantly better than this.  (The exact value will
+  depend on the interpolation scheme chosen.)  What's a good way to decide what resolution
+  to use?
+
+\item {\bf Lensed CMB power spectrum.}
+
+\item {\bf Quadratic estimator.}
+
+\end{enumerate}
+
+
+
+%\begin{figure}
+%\centerline{\includegraphics[width=14cm]{x.pdf}}
+%\caption{xxx}
+%\label{fig:xxx}
+%\end{figure}
+
+% Note: Syntax for clipping a figure is
+% \includegraphics[trim={5cm 0 0 0},clip,...]
+%  where ordering is <left> <lower> <right> <upper>
+
+% \section*{Acknowledgements}
+%
+% Research at Perimeter Institute is supported by the Government of Canada
+% through Industry Canada and by the Province of Ontario through the Ministry of Research \& Innovation.
+% Some computations were performed on the GPC cluster at the SciNet HPC Consortium.
+% SciNet is funded by the Canada Foundation for Innovation under the auspices of Compute Canada,
+% the Government of Ontario, and the University of Toronto.
+% KMS was supported by an NSERC Discovery Grant and an Ontario Early Researcher Award.
+
+% \bibliographystyle{h-physrev}
+% \bibliography{xxx}
+
+% \appendix
+% \section{Appendix}
+
+\end{document}
