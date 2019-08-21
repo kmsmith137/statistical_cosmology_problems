@@ -81,7 +81,6 @@ In this version of the problems, we make the following simplifying assumptions:
   are statistically independent.  (This is an excellent approximation on most angular scales,
   but breaks down on small scales and very large scales, due to the ISW effect.)
 \end{enumerate}
-In future versions, these assumptions may be relaxed!
 
 \section{Definitions and notation}
 
@@ -245,7 +244,7 @@ $\bigoh(N^2 \log N)$, a huge improvement!  First, show that:
 \be
 N_L^{(0)} = -L_i L_j \int d^2\x \, e^{-i\L\cdot\x} \Big[
   \big( \partial_i \gamma_1(\x) \big) \big( \partial_j \gamma_1(\x) \big) +
-  \gamma_0(\x) \big( \partial_i \partial_j \gamma_2(\x) \big) \Big]
+  \gamma_0(\x) \big( \partial_i \partial_j \gamma_2(\x) \big) \Big]  \label{eq:n0_position}
 \ee
 where we have defined the field:
 \be
@@ -253,7 +252,7 @@ where we have defined the field:
 \ee
 Second, show that:
 \be
-\hphi(\L) =  N_L^{(0)} (iL_i) \int d^2\x \, e^{-i\l\cdot\x} \Big( \alpha(\x) \, \partial_i \beta(\x) \Big)
+\hphi(\L) =  N_L^{(0)} (iL_i) \int d^2\x \, e^{-i\l\cdot\x} \Big( \alpha(\x) \, \partial_i \beta(\x) \Big)  \label{eq:hphi_position}
 \ee
 where we have defined fields:
 \be
@@ -372,9 +371,19 @@ the delta functions using Eq.~(\ref{eq:discretize_delta_functions}).
   depend on the interpolation scheme chosen.)  What's a good way to decide what resolution
   to use?
 
-\item {\bf Lensed CMB power spectrum.}
-
 \item {\bf Quadratic estimator.}
+  Implement the quadratic estimator $T_{\rm obs}(\l) \rightarrow \hphi(\L)$, using its
+  position-space representation in Eq.~(\ref{eq:hphi_position}).
+
+  Apply the quadratic estimator to an ensemble of {\em unlensed} CMB maps.
+  Estimate the power spectrum of $\hphi$, and show that it agrees numerically with the
+  $N^{(0)}$-bias, which you can compute using its position-space representation in
+  Eq.~(\ref{eq:n0_position}).
+
+  Next, fix a random realization of the lensing potential $\hphi$, and construct an
+  ensemble of lensed CMB realizations, by randomizing the unlensed CMB.  Show that
+  the expectation value $\langle \hphi \rangle_T$ taken over this Monte Carlo ensemble
+  agrees with the true lens realization $\phi$.
 
 \end{enumerate}
 
